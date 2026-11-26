@@ -4209,3 +4209,23 @@ nav,
 [data-theme="dark"] :is(.tools .card.tool, .stats .card.stat, .fg2 .fcard, .fg3 .fcard, .kp div, .flow div, .garden .tile, .plan.h, .cta2) :is(h2, h3, .pr, strong) {
   color: var(--ink);
 }
+
+/* Dark mode: light footer (mirror of light mode's dark footer) */
+[data-theme="dark"] footer {
+  --ink: #151513;
+  --surface: #f4f2ea;
+  --mute: #5c5a53;
+  --line: #dcd8cc;
+  background: #f4f2ea !important;
+  border-top: 0 !important;
+  color: var(--mute);
+}
+[data-theme="dark"] footer .fc h4 { color: #151513; }
+[data-theme="dark"] footer .fc:nth-child(2) h4 { color: #2f6fdf; }
+[data-theme="dark"] footer .fc:nth-child(3) h4 { color: #d6457f; }
+[data-theme="dark"] footer .fc:nth-child(4) h4 { color: #2f8a3e; }
+[data-theme="dark"] footer .fc:nth-child(5) h4 { color: #d9731c; }
+[data-theme="dark"] footer .fc a:hover,
+[data-theme="dark"] footer .fb .logo { color: #151513; }
+[data-theme="dark"] footer .mk rect { fill: #151513; }
+[data-theme="dark"] footer .mk path { stroke: #f4f2ea; }
