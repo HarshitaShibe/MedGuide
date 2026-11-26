@@ -79,9 +79,17 @@ const tabOf = (keys, def) => {
 addEventListener("hashchange", () => render());
 const P = {},
   go = (h) => (location.href = h);
+/* Tools need an account. Only these pages open without signing in. */
+const OPEN = ["/", "/signin", "/privacy", "/pricing", "/parent"];
+/* Page to return to after sign-in: only a local page name, never a full URL. */
+const NEXT = () => {
+  const n = new URLSearchParams(location.search).get("next") || "";
+  return /^[a-z]+\.html(#[a-z]+)?$/.test(n) ? n : "";
+};
+const toSignIn = (page, fresh) => location.replace(`signin.html?${fresh ? "new&" : ""}next=${encodeURIComponent(page)}`);
 function need() {
   if (!U) {
-    go("signin.html");
+    toSignIn((location.pathname.split("/").pop() || "index.html") + location.hash);
     return true;
   }
 }
@@ -551,6 +559,7 @@ const FOOTER_HTML = `<div class="fg"><div class="fb"><a class="logo" href="index
   .join("")}</div><p class="fd">Rules and fees are summarised from the MCC UG Counselling 2026 Information Bulletin (revised, 20.08.2026). Schedules and rules can change; confirm on <a href="https://mcc.nic.in" target="_blank" rel="noopener noreferrer">mcc.nic.in</a> or your State authority. MedGuide cannot guarantee admission or allotment and never registers, fills or locks choices for you. Your account and entries are stored only in this browser. Official links last checked ${VERIFIED}.</p><div class="fl2"><span>© 2026 MedGuide</span><span><a href="privacy.html">Privacy &amp; disclaimer</a></span></div>`;
 function render() {
   const r = document.body.dataset.page || "/";
+  if (!U && !OPEN.includes(r)) return toSignIn(FILE(r) + location.hash);
   if (typeof MOCK_T != "undefined") clearInterval(MOCK_T);
   const pg = P[r] || P["/"],
     y = scrollY,
@@ -597,6 +606,7 @@ function render() {
   }
   $("#app").innerHTML = soonBar(r) + pg();
   if (pg.after) pg.after();
+  document.body.classList.toggle("landing", !!$("#app .gh"));
   /* every page title gets a section label, so headers read the same everywhere */
   const h1 = $("#app h1"),
     pv = h1 && h1.previousElementSibling;

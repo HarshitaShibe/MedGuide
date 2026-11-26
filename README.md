@@ -2,13 +2,38 @@
 
 **The rank opens the door. The right choice gets you through.**
 
-MedGuide is a NEET-UG counselling companion for students and parents. It turns the official MCC counselling rules, schedules and notices into a personal roadmap, from the result to the day you join a college: what to register for, which documents you need, which deadlines are coming, and where your rank stands.
+<p>
+  <a href="https://medguide-beryl.vercel.app/"><b>🔗 Live demo: medguide-beryl.vercel.app</b></a>
+</p>
 
-> MedGuide is an independent project. It is not affiliated with MCC, DGHS, NTA or any government body. Always confirm dates and rules on [mcc.nic.in](https://mcc.nic.in) or your State counselling authority.
+MedGuide is a NEET-UG counselling companion for students and parents, from the day results are out to the day you join a college.
 
 <p align="center">
   <img src="docs/screenshots/home.png" alt="MedGuide home page" width="900">
 </p>
+
+## Why MedGuide
+
+Every year over 22 lakh students register for NEET-UG and about 11 lakh qualify, for roughly 1.65 lakh MBBS and BDS seats. A good rank is only half the job. The other half is counselling:
+
+- **Two parallel systems.** All India Quota (run by MCC) and State quota (34 different State/UT authorities) each have their own registration, fees and rules.
+- **Multiple rounds with strict, changing deadlines.** One missed date or a badly ordered choice list can cost a seat, or a forfeited security deposit.
+- **Rules and updates buried in long documents.** They sit in a long Information Bulletin and a stream of PDF notices, full of terms like *float*, *freeze*, *upgradation* and *stray vacancy*.
+- **Paid help is expensive.** Many students turn to costly counsellors or rely on WhatsApp forwards.
+
+MedGuide turns all of this into one clear, personal plan.
+
+## How it works
+
+1. **Tell it about yourself.** Add your rank, category, domicile State and course preference. Everything stays in your own browser.
+2. **Get your roadmap.** MedGuide works out which counselling routes apply to you, which documents and certificates you need, and lists every step from registration to reporting. Progress ticks itself as you go.
+3. **See where your rank stands.** Compare your AIR with five years of closing ranks, round by round, for All India and State quota. MedGuide never promises a seat.
+4. **Stay on top of every update.** Upload any official notice PDF and get a one-line summary, whether it applies to you, and its dates added to your deadlines. Reminders work through your calendar, WhatsApp or SMS.
+5. **Practise before the real thing.** Build and compare your choice list, then lock it in a timed mock round that behaves like the MCC portal.
+
+Rules are summarised from the official MCC UG Counselling 2026 Information Bulletin, and every page links back to the official source to confirm.
+
+> MedGuide is an independent project. It is not affiliated with MCC, DGHS, NTA or any government body. Always confirm dates and rules on [mcc.nic.in](https://mcc.nic.in) or your State counselling authority.
 
 ## Features
 
@@ -95,7 +120,7 @@ Use a local server rather than opening `index.html` directly. PDF reading and do
 
 ### Deploy
 
-The site is fully static, so it can be hosted on GitHub Pages, Netlify or Vercel as is. For GitHub Pages: **Settings → Pages → Deploy from a branch → `main` / root**.
+The site is fully static and is deployed on **Vercel** at [medguide-beryl.vercel.app](https://medguide-beryl.vercel.app/). It uses the "Other" preset with no build command, and every push to `main` redeploys it. It can be hosted just as easily on GitHub Pages or Netlify.
 
 ## Project structure
 

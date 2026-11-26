@@ -29,3 +29,6 @@ _to_delete/
 medguide-backup*.json
 *.ics
 *.zip
+
+# Local notes and previews
+Claude outputs/

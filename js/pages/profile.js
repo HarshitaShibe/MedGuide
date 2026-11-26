@@ -49,6 +49,6 @@ P["/profile"].after = () => {
     d.profile = p;
     setD(d);
     toast("Details saved");
-    go("index.html");
+    go(NEXT() || "index.html");
   };
 };

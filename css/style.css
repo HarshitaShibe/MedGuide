@@ -4354,3 +4354,119 @@ body:not([data-page="/"]) main::before {
 [data-theme="dark"] body:not([data-page="/"]) main::before {
   display: none;
 }
+
+/* 9. empty states get room to breathe */
+.card.empty {
+  min-height: 180px;
+  padding: 36px 20px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.card.empty .m {
+  margin: 0;
+  max-width: 520px;
+}
+
+/* ================================================================
+   Spacing: a little more room between boxes on every page
+   ================================================================ */
+main .card { margin-bottom: 20px; }
+main :is(.g, .g2, .g3, .stats, .kp, .tools, .fg2, .fg3, .garden, .flow) { gap: 20px; }
+main :is(.g, .g2, .g3, .stats, .kp, .tools) { margin-bottom: 20px; }
+main :is(.g, .g2, .g3, .stats, .tools, .fg2, .fg3, .garden) > .card { margin-bottom: 0; }
+main .fg3, main .garden.r2 { margin-top: 20px; }
+
+/* ================================================================
+   Institute view: calm, one colour (orange) instead of a rainbow
+   ================================================================ */
+body[data-page="/institute"] main .card {
+  box-shadow: none !important;
+}
+body[data-page="/institute"] .kp div {
+  background: #fde5cb !important;
+  border: 1px solid transparent !important;
+}
+body[data-page="/institute"] .kp div b {
+  color: #b85d12 !important;
+}
+body[data-page="/institute"]:not(.landing) :is(.g, .g2:not(.mock)) > .card {
+  background: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+}
+body[data-page="/institute"] .card .eyebrow {
+  color: var(--pa) !important;
+}
+body[data-page="/institute"] .fn:nth-of-type(2) .ft i { background: #f6c79a !important; }
+body[data-page="/institute"] .fn:nth-of-type(3) .ft i { background: #ee9f5c !important; }
+body[data-page="/institute"] .fn:nth-of-type(4) .ft i { background: #d9731c !important; }
+body[data-page="/institute"] .fn:nth-of-type(5) .ft i { background: #a9530e !important; }
+[data-theme="dark"] body[data-page="/institute"]:not(.landing) :is(.g, .g2:not(.mock)) > .card {
+  --ink: #f1efe8; --navy: #f1efe8; --mute: #a9acb5; --line: #31353d;
+  --surface: #1a1c21; --surface2: #24272e;
+  --c1: #8db6ff; --c2: #f59bc0; --c3: #8fd69a; --c4: #f6b276; --c5: #bba3ff; --c6: #ecd36b;
+  color: var(--ink);
+}
+[data-theme="dark"] body[data-page="/institute"]:not(.landing) :is(.g, .g2:not(.mock)) > .card .btn:not(.sec):not(.x):not(.w):not(.ghost) {
+  background: var(--ink);
+  color: var(--surface);
+  border-color: var(--ink);
+}
+
+/* ================================================================
+   College finder chart: each year and round in its own colour;
+   years/rounds your AIR got in stay solid green
+   ================================================================ */
+.yrs .yr:nth-child(5n + 1) .yt i:not(.in) { background: #9cc2f5; }
+.yrs .yr:nth-child(5n + 2) .yt i:not(.in) { background: #b9a6ef; }
+.yrs .yr:nth-child(5n + 3) .yt i:not(.in) { background: #f2a7c6; }
+.yrs .yr:nth-child(5n + 4) .yt i:not(.in) { background: #f6c08c; }
+.yrs .yr:nth-child(5n + 5) .yt i:not(.in) { background: #ead77e; }
+.yt i.in { background: #2f8a3e; }
+.rbars .rb:nth-child(5n + 1) .rt i:not(.in) { background: #9cc2f5; }
+.rbars .rb:nth-child(5n + 2) .rt i:not(.in) { background: #b9a6ef; }
+.rbars .rb:nth-child(5n + 3) .rt i:not(.in) { background: #f2a7c6; }
+.rbars .rb:nth-child(5n + 4) .rt i:not(.in) { background: #f6c08c; }
+.rbars .rb:nth-child(5n + 5) .rt i:not(.in) { background: #ead77e; }
+.rt i.in { background: #2f8a3e; }
+.rbars .rb:nth-child(5n + 1) span { color: #2f6fdf; }
+.rbars .rb:nth-child(5n + 2) span { color: #6b47c9; }
+.rbars .rb:nth-child(5n + 3) span { color: #c23b74; }
+.rbars .rb:nth-child(5n + 4) span { color: #b85d12; }
+.rbars .rb:nth-child(5n + 5) span { color: #8a6d00; }
+.lg:not(.in):not(.mk) {
+  background: linear-gradient(90deg, #9cc2f5, #b9a6ef, #f2a7c6, #f6c08c, #ead77e);
+}
+.lg.in { background: #2f8a3e; }
+.yt,
+.rt {
+  background: color-mix(in srgb, var(--surface2) 80%, var(--line));
+}
+[data-theme="dark"] .rbars .rb:nth-child(5n + 1) span { color: #8db6ff; }
+[data-theme="dark"] .rbars .rb:nth-child(5n + 2) span { color: #bba3ff; }
+[data-theme="dark"] .rbars .rb:nth-child(5n + 3) span { color: #f59bc0; }
+[data-theme="dark"] .rbars .rb:nth-child(5n + 4) span { color: #f6b276; }
+[data-theme="dark"] .rbars .rb:nth-child(5n + 5) span { color: #ecd36b; }
+[data-theme="dark"] .yt i.in,
+[data-theme="dark"] .rt i.in,
+[data-theme="dark"] .lg.in { background: #5fc472; }
+
+/* Institute view: a soft mix of colours (like the College finder chart) */
+body[data-page="/institute"] .kp div:nth-child(1) { background: #dcecfb !important; }
+body[data-page="/institute"] .kp div:nth-child(2) { background: #ebe3fc !important; }
+body[data-page="/institute"] .kp div:nth-child(3) { background: #fbe1ec !important; }
+body[data-page="/institute"] .kp div:nth-child(4) { background: #dff1d0 !important; }
+body[data-page="/institute"] .kp div:nth-child(1) b { color: #2f6fdf !important; }
+body[data-page="/institute"] .kp div:nth-child(2) b { color: #6b47c9 !important; }
+body[data-page="/institute"] .kp div:nth-child(3) b { color: #c23b74 !important; }
+body[data-page="/institute"] .kp div:nth-child(4) b { color: #2f7a2b !important; }
+body[data-page="/institute"] .fn:nth-of-type(2) .ft i { background: #9cc2f5 !important; }
+body[data-page="/institute"] .fn:nth-of-type(3) .ft i { background: #b9a6ef !important; }
+body[data-page="/institute"] .fn:nth-of-type(4) .ft i { background: #f2a7c6 !important; }
+body[data-page="/institute"] .fn:nth-of-type(5) .ft i { background: #8fcf86 !important; }
+body[data-page="/institute"] .g2 > .card:nth-child(1) .eyebrow { color: #2f6fdf !important; }
+body[data-page="/institute"] .g2 > .card:nth-child(2) .eyebrow { color: #c23b74 !important; }
+[data-theme="dark"] body[data-page="/institute"] .g2 > .card:nth-child(1) .eyebrow { color: #8db6ff !important; }
+[data-theme="dark"] body[data-page="/institute"] .g2 > .card:nth-child(2) .eyebrow { color: #f59bc0 !important; }

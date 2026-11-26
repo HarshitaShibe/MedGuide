@@ -54,7 +54,7 @@ P["/pricing"].after = () =>
     (b) =>
       (b.onclick = () => {
         if (!U) {
-          go("signin.html?new");
+          toSignIn("pricing.html", true);
           return;
         }
         if (b.dataset.p == "plus" && PAYMENT_LINK) {

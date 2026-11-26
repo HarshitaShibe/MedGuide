@@ -162,5 +162,5 @@ P["/"].after = () => {
   const b = $("#hw2");
   if (b) b.onclick = () => howTo(0);
   const f = $("#qkf");
-  if (f) f.onsubmit = (e) => (e.preventDefault(), quick());
+  if (f) f.onsubmit = (e) => (e.preventDefault(), U ? quick() : toSignIn("predict.html", true));
 };
