@@ -41,7 +41,7 @@ ${[
 </svg>`;
 P["/signin"] = () => {
   const nw = location.search.includes("new");
-  return `<div class="auth"><div class="card af"><p class="eyebrow">${nw ? "Free account" : "Welcome back"}</p><h1>${nw ? "Create your account" : "Sign in"}</h1><p class="m">${nw ? "Save your roadmap, deadlines, documents and choice list in one place." : "Pick up your counselling plan where you left it."}</p><div class="note">Your account is saved on this device only. Don’t reuse an important password.</div><form id="af" novalidate><label>Email<input id="e" type="email" autocomplete="email" required></label><label>Password <small>(min 8 characters)</small><input id="p" type="password" autocomplete="${nw ? "new-password" : "current-password"}" required></label><p id="er" class="s" style="color:var(--bad)" role="alert"></p><button class="btn" style="width:100%">${nw ? "Create free account" : "Sign in"}</button></form><p class="m" style="margin-top:12px"><a href="signin.html${nw ? "" : "?new"}">${nw ? "I already have an account" : "Create an account"}</a></p></div><div class="ap">${AUTH_ART()}<div class="apt"><p>The rank opens the door.<br>The right choice gets you through.</p></div></div></div>`;
+  return `<div class="auth"><div class="card af"><p class="eyebrow">${nw ? "Free account" : "Welcome back"}</p><h1>${nw ? "Create your account" : "Sign in"}</h1><p class="m">${nw ? "Save your roadmap, deadlines, documents and choice list in one place." : "Pick up your counselling plan where you left it."}</p><div class="note">Your account is saved on this device only. Don’t reuse an important password.</div><form id="af" novalidate><label>Email<input id="e" type="email" autocomplete="email" required></label><label>Password <small>(min 8 characters)</small><input id="p" type="password" autocomplete="${nw ? "new-password" : "current-password"}" required></label><p id="er" class="s" style="color:var(--bad)" role="alert"></p><button class="btn" style="width:100%">${nw ? "Create free account" : "Sign in"}</button></form><p class="m" style="margin-top:12px"><a href="signin.html${nw ? (NEXT() ? "?next=" + encodeURIComponent(NEXT()) : "") : "?new" + (NEXT() ? "&next=" + encodeURIComponent(NEXT()) : "")}">${nw ? "I already have an account" : "Create an account"}</a></p></div><div class="ap">${AUTH_ART()}<div class="apt"><p>The rank opens the door.<br>The right choice gets you through.</p></div></div></div>`;
 };
 P["/signin"].after = () => {
   $("#af").onsubmit = async (ev) => {
@@ -60,6 +60,7 @@ P["/signin"].after = () => {
     } else if (us[e] !== h) return ($("#er").textContent = "Email or password is incorrect.");
     U = e;
     store.set("mg_s", e);
-    go(PR() ? "account.html" : "profile.html");
+    const nx = NEXT();
+    go(PR() ? nx || "account.html" : "profile.html" + (nx ? "?next=" + encodeURIComponent(nx) : ""));
   };
 };
