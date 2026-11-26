@@ -4014,3 +4014,198 @@ nav,
     min-height: 200px;
   }
 }
+
+/* ================================================================
+   Dark mode: clearer surfaces and visible colour sections
+   ================================================================ */
+[data-theme="dark"] {
+  --bg: #0f1013;
+  --surface: #1a1c21;
+  --surface2: #24272e;
+  --line: #31353d;
+  --mute: #a9acb5;
+  /* pastel sections: deeper, more saturated tints that stay visible on dark */
+  --pb: #1c3654;
+  --pp: #4a2138;
+  --pg: #1f3f27;
+  --po: #4b2f17;
+  --py: #463c12;
+  --pv: #322759;
+  --lime: #2d4219;
+}
+[data-theme="dark"] .card,
+[data-theme="dark"] .card:hover {
+  border-color: var(--line);
+}
+[data-theme="dark"] a.card:hover {
+  border-color: #454a55;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+}
+/* a thin tinted edge makes every coloured block read as its own section */
+[data-theme="dark"] .tools .card.tool:nth-child(6n + 1),
+[data-theme="dark"] .stats .card.stat:nth-child(1),
+[data-theme="dark"] .fg2 .fcard:nth-child(1),
+[data-theme="dark"] .kp div:nth-child(5n + 1),
+[data-theme="dark"] .flow div:nth-child(6n + 1),
+[data-theme="dark"] .garden .tile.sb {
+  background: var(--pb);
+  border: 1px solid color-mix(in srgb, var(--c1) 38%, transparent) !important;
+}
+[data-theme="dark"] .tools .card.tool:nth-child(6n + 2),
+[data-theme="dark"] .stats .card.stat:nth-child(4),
+[data-theme="dark"] .fg3 .fcard:nth-child(1),
+[data-theme="dark"] .kp div:nth-child(5n + 2),
+[data-theme="dark"] .flow div:nth-child(6n + 2) {
+  background: var(--pp);
+  border: 1px solid color-mix(in srgb, var(--c2) 38%, transparent) !important;
+}
+[data-theme="dark"] .tools .card.tool:nth-child(6n + 3),
+[data-theme="dark"] .stats .card.stat:nth-child(3),
+[data-theme="dark"] .fg2 .fcard:nth-child(2),
+[data-theme="dark"] .kp div:nth-child(5n + 3),
+[data-theme="dark"] .flow div:nth-child(6n + 3) {
+  background: var(--pg);
+  border: 1px solid color-mix(in srgb, var(--c3) 38%, transparent) !important;
+}
+[data-theme="dark"] .tools .card.tool:nth-child(6n + 4),
+[data-theme="dark"] .fg3 .fcard:nth-child(2),
+[data-theme="dark"] .kp div:nth-child(5n + 4),
+[data-theme="dark"] .flow div:nth-child(6n + 4) {
+  background: var(--po);
+  border: 1px solid color-mix(in srgb, var(--c4) 38%, transparent) !important;
+}
+[data-theme="dark"] .tools .card.tool:nth-child(6n + 5),
+[data-theme="dark"] .kp div:nth-child(5n + 5),
+[data-theme="dark"] .flow div:nth-child(6n + 5) {
+  background: var(--pv);
+  border: 1px solid color-mix(in srgb, var(--c5) 38%, transparent) !important;
+}
+[data-theme="dark"] .tools .card.tool:nth-child(6n + 6),
+[data-theme="dark"] .stats .card.stat:nth-child(2),
+[data-theme="dark"] .fg3 .fcard:nth-child(3),
+[data-theme="dark"] .flow div:nth-child(6n + 6),
+[data-theme="dark"] .garden .tile.sy {
+  background: var(--py);
+  border: 1px solid color-mix(in srgb, var(--c6) 38%, transparent) !important;
+}
+/* icon chips inside coloured blocks */
+[data-theme="dark"] .tools .card.tool .ti,
+[data-theme="dark"] .stats .card.stat .si {
+  background: rgba(255, 255, 255, 0.1);
+}
+/* previews inside feature cards */
+[data-theme="dark"] .fcard .shot {
+  background: rgba(255, 255, 255, 0.06);
+}
+[data-theme="dark"] .shot .mini {
+  background: var(--surface);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+/* plans */
+[data-theme="dark"] .plan.h:nth-of-type(4n + 1) { background: var(--pg); border: 1px solid color-mix(in srgb, var(--c3) 38%, transparent); }
+[data-theme="dark"] .plan.h:nth-of-type(4n + 2) { background: var(--pv); border: 1px solid color-mix(in srgb, var(--c5) 38%, transparent); }
+[data-theme="dark"] .plan.h:nth-of-type(4n + 3) { background: var(--po); border: 1px solid color-mix(in srgb, var(--c4) 38%, transparent); }
+[data-theme="dark"] .plan.h:nth-of-type(4n + 4) { background: var(--pb); border: 1px solid color-mix(in srgb, var(--c1) 38%, transparent); }
+[data-theme="dark"] .plan.h.cur { border: 2px solid var(--c3); }
+/* page header wash and tabs */
+[data-theme="dark"] body:not([data-page="/"]) main::before {
+  background: linear-gradient(180deg, var(--pt) 0%, color-mix(in srgb, var(--pt) 45%, transparent) 55%, transparent 100%);
+}
+[data-theme="dark"] .tabs {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+}
+/* notes, tables, deadline chips */
+[data-theme="dark"] .note {
+  background: var(--py);
+  color: #f2e3a2;
+}
+[data-theme="dark"] th {
+  background: var(--surface2);
+}
+[data-theme="dark"] .dlr .cal {
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+/* closing band and footer stand apart from the page */
+[data-theme="dark"] .cta2 {
+  background: linear-gradient(120deg, #2d4219, #34481c 55%, #44441a);
+  border: 1px solid #4b6229;
+}
+[data-theme="dark"] footer {
+  background: #08090b !important;
+  border-top: 1px solid var(--line) !important;
+}
+
+/* ================================================================
+   Dark mode: colour boxes stay light pastel (like light mode),
+   with dark text inside, so they pop against the dark page.
+   ================================================================ */
+[data-theme="dark"] :is(.tools .card.tool, .stats .card.stat, .fg2 .fcard, .fg3 .fcard, .kp div, .flow div, .garden .tile, .plan.h, .cta2) {
+  --pb: #dcecfb;
+  --pp: #fbe1ec;
+  --pg: #dff1d0;
+  --po: #fde5cb;
+  --py: #faf1c2;
+  --pv: #ebe3fc;
+  --lime: #cbe9a6;
+  --c1: #2f6fdf;
+  --c2: #d6457f;
+  --c3: #2f8a3e;
+  --c4: #d9731c;
+  --c5: #7b55d6;
+  --c6: #8a6d00;
+  --pbi: #1f6fb3;
+  --pyi: #8a6d00;
+  --ppi: #b03a74;
+  --pgi: #2f7a2b;
+  --poi: #b25a12;
+  --ink: #151513;
+  --mute: #5c5a53;
+  --line: rgba(20, 20, 18, 0.1);
+  --surface: #ffffff;
+  --surface2: #f1efe9;
+  --bad: #b42323;
+  --badbg: #fde8e8;
+  color: var(--ink);
+}
+[data-theme="dark"] :is(.tools .card.tool, .stats .card.stat, .fg2 .fcard, .fg3 .fcard, .kp div, .flow div, .garden .tile, .plan.h) {
+  border-color: transparent !important;
+}
+[data-theme="dark"] .plan.h.cur {
+  border: 2px solid #2f8a3e !important;
+}
+[data-theme="dark"] .tools .card.tool .ti,
+[data-theme="dark"] .stats .card.stat .si {
+  background: rgba(255, 255, 255, 0.75);
+}
+[data-theme="dark"] .fcard .shot {
+  background: rgba(255, 255, 255, 0.55);
+}
+[data-theme="dark"] .shot .mini {
+  background: #fff;
+  color: #151513;
+  box-shadow: 0 6px 20px rgba(20, 20, 18, 0.08);
+}
+[data-theme="dark"] .flow span {
+  color: #fff !important;
+}
+[data-theme="dark"] .cta2 {
+  background: linear-gradient(120deg, #cbe9a6, #d9efb4 55%, #f1f3b0);
+  border: 0;
+}
+[data-theme="dark"] :is(.cta2, .fcard) .hl,
+[data-theme="dark"] .cta2 .hl.hy {
+  --mk: #f9e27d;
+}
+[data-theme="dark"] .mini .hl {
+  --mk: #f9e27d;
+}
+[data-theme="dark"] .stats .card.stat .rbg {
+  stroke: rgba(20, 20, 18, 0.12);
+}
+[data-theme="dark"] :is(.tools .card.tool, .stats .card.stat, .fg2 .fcard, .fg3 .fcard, .kp div, .flow div, .garden .tile, .plan.h, .cta2) {
+  --navy: #151513;
+}
+[data-theme="dark"] :is(.tools .card.tool, .stats .card.stat, .fg2 .fcard, .fg3 .fcard, .kp div, .flow div, .garden .tile, .plan.h, .cta2) :is(h2, h3, .pr, strong) {
+  color: var(--ink);
+}
