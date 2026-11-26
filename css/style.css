@@ -4229,3 +4229,128 @@ nav,
 [data-theme="dark"] footer .fb .logo { color: #151513; }
 [data-theme="dark"] footer .mk rect { fill: #151513; }
 [data-theme="dark"] footer .mk path { stroke: #f4f2ea; }
+
+/* ================================================================
+   Even colour on every page (light and dark):
+   1) each content card carries a coloured top edge, cycling the palette
+   2) side-by-side cards on inner pages are pastel boxes
+   3) question rows, list markers and section titles pick up the page colour
+   ================================================================ */
+main .card:not(.tool):not(.stat):not(.fcard):not(.plan):not(.af):not(.tile) {
+  --acc: var(--c1);
+  box-shadow: inset 0 4px 0 0 var(--acc);
+}
+main .card:not(.tool):not(.stat):not(.fcard):not(.plan):not(.af):nth-child(5n + 2) { --acc: var(--c2); }
+main .card:not(.tool):not(.stat):not(.fcard):not(.plan):not(.af):nth-child(5n + 3) { --acc: var(--c3); }
+main .card:not(.tool):not(.stat):not(.fcard):not(.plan):not(.af):nth-child(5n + 4) { --acc: var(--c4); }
+main .card:not(.tool):not(.stat):not(.fcard):not(.plan):not(.af):nth-child(5n + 5) { --acc: var(--c5); }
+main a.card:not(.tool):not(.stat):not(.fcard):hover {
+  box-shadow: inset 0 4px 0 0 var(--acc), var(--shadow2);
+}
+
+/* side-by-side cards on inner pages become pastel boxes */
+body:not([data-page="/"]) :is(.g, .g2:not(.mock)) > .card:nth-child(5n + 1) { background: var(--pb); }
+body:not([data-page="/"]) :is(.g, .g2:not(.mock)) > .card:nth-child(5n + 2) { background: var(--pp); }
+body:not([data-page="/"]) :is(.g, .g2:not(.mock)) > .card:nth-child(5n + 3) { background: var(--pg); }
+body:not([data-page="/"]) :is(.g, .g2:not(.mock)) > .card:nth-child(5n + 4) { background: var(--po); }
+body:not([data-page="/"]) :is(.g, .g2:not(.mock)) > .card:nth-child(5n + 5) { background: var(--pv); }
+body:not([data-page="/"]) :is(.g, .g2:not(.mock)) > .card {
+  border-color: transparent;
+}
+[data-theme="dark"] body:not([data-page="/"]) :is(.g, .g2:not(.mock)) > .card {
+  --pb: #dcecfb;
+  --pp: #fbe1ec;
+  --pg: #dff1d0;
+  --po: #fde5cb;
+  --py: #faf1c2;
+  --pv: #ebe3fc;
+  --c1: #2f6fdf;
+  --c2: #d6457f;
+  --c3: #2f8a3e;
+  --c4: #d9731c;
+  --c5: #7b55d6;
+  --c6: #8a6d00;
+  --ink: #151513;
+  --navy: #151513;
+  --mute: #5c5a53;
+  --line: rgba(20, 20, 18, 0.12);
+  --surface: #ffffff;
+  --surface2: #f1efe9;
+  --soft: #e6f1ea;
+  --bad: #b42323;
+  --badbg: #fde8e8;
+  --ok: #11734a;
+  --okbg: #dff5ea;
+  --warn: #8a5a00;
+  --warnbg: #fff4d6;
+  color: var(--ink);
+}
+[data-theme="dark"] body:not([data-page="/"]) :is(.g, .g2:not(.mock)) > .card :is(h2, h3, strong, b) {
+  color: var(--ink);
+}
+[data-theme="dark"] body:not([data-page="/"]) :is(.g, .g2:not(.mock)) > .card .btn:not(.sec):not(.x):not(.w):not(.ghost) {
+  background: #151513;
+  color: #fff;
+  border-color: #151513;
+}
+
+/* question rows and list markers use the page colour */
+details > summary::marker,
+details > summary::-webkit-details-marker {
+  color: var(--pa);
+}
+details[open] > summary {
+  color: var(--pa);
+}
+main ul li::marker {
+  color: var(--pa);
+}
+/* section titles get a short colour bar */
+body:not([data-page="/"]) main > h2,
+body:not([data-page="/"]) main .tabp > h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+body:not([data-page="/"]) main > h2::before,
+body:not([data-page="/"]) main .tabp > h2::before {
+  content: "";
+  width: 18px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--pa);
+  flex: 0 0 auto;
+}
+[data-theme="dark"] body:not([data-page="/"]) :is(.g, .g2:not(.mock)) > .card a:not(.btn) {
+  color: #1f5fb8;
+}
+.auth .gate {
+  margin: -6px 0 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--pb);
+  color: var(--ink);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+[data-theme="dark"] .auth .gate {
+  background: #dcecfb;
+  color: #151513;
+}
+
+/* Page title area: more room between the colour wash edge and the heading */
+body:not([data-page="/"]) main::before {
+  left: 0;
+  right: 0;
+  top: 10px;
+}
+@media (max-width: 600px) {
+  body:not([data-page="/"]) main::before {
+    left: -6px;
+    right: -6px;
+  }
+}
+/* Dark mode: no colour wash behind page titles */
+[data-theme="dark"] body:not([data-page="/"]) main::before {
+  display: none;
+}
