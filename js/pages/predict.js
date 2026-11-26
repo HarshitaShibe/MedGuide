@@ -1,6 +1,9 @@
 /* Page: College finder (predict.html) — where your AIR stands against 2025 AIQ closing ranks. Reference data, not a prediction. */
 function parseCSV(t) {
   const rows = [];
+  t = t.replace(/^\uFEFF/, "");
+  const first = t.split("\n")[0] || "",
+    sep = [",", ";", "\t"].sort((a, b) => first.split(b).length - first.split(a).length)[0];
   t.replace(/\r/g, "")
     .split("\n")
     .filter((l) => l.trim())
@@ -15,7 +18,7 @@ function parseCSV(t) {
           else if (ch == '"') q = false;
           else c += ch;
         } else if (ch == '"') q = true;
-        else if (ch == ",") o.push(c.trim()), (c = "");
+        else if (ch == sep) o.push(c.trim()), (c = "");
         else c += ch;
       }
       o.push(c.trim());
@@ -102,7 +105,7 @@ ${bds ? `<h2 style="margin-top:6px">Your course: BDS</h2>${bdsBlock(p, true)}<h2
     .join("")}</table><p class="s" style="margin-top:8px">Likely: your AIR is well inside the closing rank. Borderline: within about 10%. Reach: beyond it. ${cat == "General" || cat == "OBC-NCL" ? "" : "Only General and OBC closing ranks are available; your category usually closes later at the same college. "}2025 AIQ closing ranks.</p></div>
 ${bds ? "" : `<h2>Backup option: BDS</h2>${bdsBlock(p, false)}`}
 <h2>Full college list from official results</h2>
-<div class="card"><p class="m">For every college, load MCC’s official allotment results as a CSV with columns <code>college, state, route, category, closing_rank, year</code>, plus optional <code>course</code> (MBBS/BDS) and <code>fee</code> (annual tuition). State-quota results work too: set route to “State quota”. MedGuide then lists the colleges your AIR reached for your category, and you can add them to your choice list in one click.</p><div class="row np"><button class="btn sec" id="tpl">Download CSV template</button><label class="btn" style="margin:0">Load CSV<input type="file" id="csv" accept=".csv,text/csv" hidden></label>${cut ? `<button class="btn x" id="clr">Remove loaded data</button>` : ""}</div>
+<div class="card"><p class="m">For every college, load MCC’s official allotment results as a CSV with columns <code>college, state, route, category, closing_rank, year</code>, plus optional <code>course</code> (MBBS/BDS) and <code>fee</code> (annual tuition). State-quota results work too: set route to “State quota”. MedGuide then lists the colleges your AIR reached for your category, and you can add them to your choice list in one click.</p><div class="row np"><button class="btn sec" id="tpl">Download CSV template</button><label class="btn" style="margin:0">Load CSV<input type="file" id="csv" accept=".csv,text/csv,.txt" hidden></label>${cut ? `<button class="btn x" id="clr">Remove loaded data</button>` : ""}</div>
 ${
   cut
     ? `<p class="s" style="margin:12px 0 6px">Loaded “${esc(cut.name)}” · ${cut.rows.length} rows · ${mine.length} for ${esc(CATS[cat])}. <label class="ck" style="display:inline-flex;margin:0 0 0 8px"><input type="checkbox" id="sa" ${showAll ? "checked" : ""}> Show all</label></p>${
@@ -167,10 +170,22 @@ P["/predict"].after = () => {
     const f = e.target.files[0];
     if (!f) return;
     const rows = parseCSV(await f.text()),
-      h = (rows.shift() || []).map((x) => x.toLowerCase().replace(/\s+/g, "_")),
-      ix = (k) => h.indexOf(k),
+      ALIAS = {
+        college: ["college", "college_name", "institute", "institute_name", "allotted_institute", "name"],
+        state: ["state", "state_name"],
+        route: ["route", "quota", "allotted_quota"],
+        category: ["category", "allotted_category", "cat", "seat_category"],
+        closing_rank: ["closing_rank", "last_rank", "rank", "closing_air", "air", "cutoff", "cut_off"],
+        year: ["year", "session"],
+        course: ["course", "program", "programme"],
+        fee: ["fee", "fees", "annual_fee", "tuition_fee"],
+      },
+      h = (rows.shift() || []).map((x) => x.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "")),
+      ix = (k) => h.findIndex((x) => (ALIAS[k] || [k]).includes(x)),
       need = ["college", "category", "closing_rank"];
-    if (need.some((k) => ix(k) < 0)) return toast("CSV needs columns: college, category, closing_rank");
+    if (/\.(pdf|xlsx?)$/i.test(f.name)) return toast("Please save the file as CSV first (in Excel: File → Save As → CSV).");
+    const miss = need.filter((k) => ix(k) < 0);
+    if (miss.length) return toast(`Missing column${miss.length > 1 ? "s" : ""}: ${miss.join(", ")}. Found: ${h.slice(0, 8).join(", ") || "none"}. Use the CSV template.`);
     const out = rows
       .map((r) => ({
         n: r[ix("college")],
@@ -183,7 +198,7 @@ P["/predict"].after = () => {
         fee: ix("fee") >= 0 ? +String(r[ix("fee")] || "").replace(/[^\d]/g, "") || 0 : 0,
       }))
       .filter((r) => r.n && r.cr > 0);
-    if (!out.length) return toast("No usable rows found");
+    if (!out.length) return toast("No usable rows: each row needs a college name and a closing rank number.");
     store.set("mg_cut", { name: f.name, rows: out });
     toast(out.length + " rows loaded");
     render();
