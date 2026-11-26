@@ -26,6 +26,22 @@ function parseCSV(t) {
     });
   return rows;
 }
+/* CSV of the 2025 AIQ closing ranks MedGuide already has (MBBS top colleges + BDS colleges).
+   Load it as is, or add rows from official MCC/State results in the same format. */
+const starterCSV = () => {
+  const q = (v) => (/[",]/.test(String(v)) ? `"${String(v).replace(/"/g, '""')}"` : v),
+    out = ["college,state,route,category,closing_rank,year,course,fee"],
+    fee = (n) => (COLLEGE_INFO[n] && COLLEGE_INFO[n].fee) || "";
+  TOP_COLLEGES.list.forEach(([n, st, g, o]) => {
+    if (g) out.push([q(n), q(st), "AIQ", "General", g, 2025, "MBBS", fee(n)].join(","));
+    if (o) out.push([q(n), q(st), "AIQ", "OBC", o, 2025, "MBBS", fee(n)].join(","));
+  });
+  BDS_COLLEGES.list.forEach(([n, st, g, o]) => {
+    if (g) out.push([q(n), q(st), "AIQ", "General", g, 2025, "BDS", ""].join(","));
+    if (o) out.push([q(n), q(st), "AIQ", "OBC", o, 2025, "BDS", ""].join(","));
+  });
+  return out.join("\n") + "\n";
+};
 const CAT_ALIAS = { general: "General", ur: "General", open: "General", gn: "General", ews: "EWS", obc: "OBC-NCL", "obc-ncl": "OBC-NCL", bc: "OBC-NCL", sc: "SC", st: "ST" };
 const bdsBlock = (p, open) => {
   const air = +p.air,
@@ -105,7 +121,7 @@ ${bds ? `<h2 style="margin-top:6px">Your course: BDS</h2>${bdsBlock(p, true)}<h2
     .join("")}</table><p class="s" style="margin-top:8px">Likely: your AIR is well inside the closing rank. Borderline: within about 10%. Reach: beyond it. ${cat == "General" || cat == "OBC-NCL" ? "" : "Only General and OBC closing ranks are available; your category usually closes later at the same college. "}2025 AIQ closing ranks.</p></div>
 ${bds ? "" : `<h2>Backup option: BDS</h2>${bdsBlock(p, false)}`}
 <h2>Full college list from official results</h2>
-<div class="card"><p class="m">For every college, load MCC’s official allotment results as a CSV with columns <code>college, state, route, category, closing_rank, year</code>, plus optional <code>course</code> (MBBS/BDS) and <code>fee</code> (annual tuition). State-quota results work too: set route to “State quota”. MedGuide then lists the colleges your AIR reached for your category, and you can add them to your choice list in one click.</p><div class="row np"><button class="btn sec" id="tpl">Download CSV template</button><label class="btn" style="margin:0">Load CSV<input type="file" id="csv" accept=".csv,text/csv,.txt" hidden></label>${cut ? `<button class="btn x" id="clr">Remove loaded data</button>` : ""}</div>
+<div class="card"><p class="m">Download the 2025 AIQ closing ranks MedGuide has for MBBS and BDS colleges, add more rows from official MCC or State results if you have them, then load the file. Columns: <code>college, state, route, category, closing_rank, year</code>, plus optional <code>course</code> (MBBS/BDS) and <code>fee</code> (annual tuition). State-quota results work too: set route to “State quota”. MedGuide then lists the colleges your AIR reached for your category, and you can add them to your choice list in one click.</p><div class="row np"><button class="btn sec" id="tpl">Download 2025 data (CSV)</button><label class="btn" style="margin:0">Load CSV<input type="file" id="csv" accept=".csv,text/csv,.txt" hidden></label>${cut ? `<button class="btn x" id="clr">Remove loaded data</button>` : ""}</div>
 ${
   cut
     ? `<p class="s" style="margin:12px 0 6px">Loaded “${esc(cut.name)}” · ${cut.rows.length} rows · ${mine.length} for ${esc(CATS[cat])}. <label class="ck" style="display:inline-flex;margin:0 0 0 8px"><input type="checkbox" id="sa" ${showAll ? "checked" : ""}> Show all</label></p>${
@@ -162,8 +178,8 @@ P["/predict"].after = () => {
   );
   $("#tpl").onclick = () =>
     download(
-      "medguide-cutoffs-template.csv",
-      "college,state,route,category,closing_rank,year,course,fee\n\"Example Govt Medical College, City\",Rajasthan,AIQ,General,25000,2025,MBBS,60000\n\"Example Govt Medical College, City\",Rajasthan,State quota,OBC,31000,2025,MBBS,60000\n",
+      "medguide-closing-ranks-2025.csv",
+      starterCSV(),
       "text/csv",
     );
   $("#csv").onchange = async (e) => {
@@ -185,7 +201,7 @@ P["/predict"].after = () => {
       need = ["college", "category", "closing_rank"];
     if (/\.(pdf|xlsx?)$/i.test(f.name)) return toast("Please save the file as CSV first (in Excel: File → Save As → CSV).");
     const miss = need.filter((k) => ix(k) < 0);
-    if (miss.length) return toast(`Missing column${miss.length > 1 ? "s" : ""}: ${miss.join(", ")}. Found: ${h.slice(0, 8).join(", ") || "none"}. Use the CSV template.`);
+    if (miss.length) return toast(`Missing column${miss.length > 1 ? "s" : ""}: ${miss.join(", ")}. Found: ${h.slice(0, 8).join(", ") || "none"}. Download the 2025 data to see the format.`);
     const out = rows
       .map((r) => ({
         n: r[ix("college")],
