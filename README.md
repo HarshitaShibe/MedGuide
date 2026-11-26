@@ -1,2 +1,148 @@
 # MedGuide
-MedGuide is an AI-powered NEET-UG counselling platform that guides students and parents from results to admission through personalised roadmaps, eligibility checks, smart choice-filling, deadline tracking, and verified official information.
+
+**The rank opens the door. The right choice gets you through.**
+
+MedGuide is a NEET-UG counselling companion for students and parents. It turns the official MCC counselling rules, schedules and notices into a personal roadmap, from the result to the day you join a college: what to register for, which documents you need, which deadlines are coming, and where your rank stands.
+
+> MedGuide is an independent project. It is not affiliated with MCC, DGHS, NTA or any government body. Always confirm dates and rules on [mcc.nic.in](https://mcc.nic.in) or your State counselling authority.
+
+<p align="center">
+  <img src="docs/screenshots/home.png" alt="MedGuide home page" width="900">
+</p>
+
+## Features
+
+| | |
+|---|---|
+| **Dashboard** | Roadmap progress, next deadline, document readiness and choice-list balance at a glance. |
+| **Personal roadmap** | Every step from result to joining, ticked automatically from your data. |
+| **College finder** | Your AIR against 5 years (2021–2025) of All India Quota closing ranks, round-wise 2025 ranks, State-wise government colleges and BDS options. |
+| **Counselling guide** | AIQ vs State counselling, side-by-side comparison, rules and fees, what to do after allotment, and links to all 34 State/UT counselling authorities. |
+| **Explain a notice** | Upload an MCC/State notice PDF (or paste text) to get a one-line summary, whether it applies to you, and its dates added to your deadlines in one click. |
+| **Deadlines** | Due-soon warnings on every page, calendar export (`.ics`), and WhatsApp/SMS reminders. |
+| **Documents** | A checklist filtered to your category; a document counts as ready only once its scan is uploaded. Download everything as one ZIP. |
+| **Choice list** | Ordered drafts, a college comparison with fees and bond details, and a timed mock choice-filling practice. |
+| **Help & experts** | Searchable Q&A, expert session requests and the official MCC video tutorials. |
+| **Institute view** | A batch dashboard for coaching institutes (demo data). |
+| **Everywhere** | English and Hindi, light and dark themes, a Ctrl + K command palette, a read-only parent link, and a mobile-friendly layout. |
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/dashboard.png" alt="Dashboard"><p align="center"><b>Dashboard</b></p></td>
+    <td width="50%"><img src="docs/screenshots/college-finder.png" alt="College finder"><p align="center"><b>College finder</b></p></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/counselling-guide.png" alt="Counselling guide"><p align="center"><b>Counselling guide</b></p></td>
+    <td><img src="docs/screenshots/explain-notice.png" alt="Explain a notice"><p align="center"><b>Explain a notice</b></p></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/documents.png" alt="Documents"><p align="center"><b>Documents</b></p></td>
+    <td><img src="docs/screenshots/mock-choice-filling.png" alt="Mock choice filling"><p align="center"><b>Mock choice filling</b></p></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/sign-up.png" alt="Sign up"><p align="center"><b>Sign up</b></p></td>
+    <td><img src="docs/screenshots/home-dark.png" alt="Dark mode"><p align="center"><b>Dark mode</b></p></td>
+  </tr>
+</table>
+
+<p align="center">
+  <img src="docs/screenshots/mobile-home.png" alt="Mobile home" width="260">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/mobile-menu.png" alt="Mobile menu" width="260">
+</p>
+
+## Tech stack
+
+- **HTML, CSS and vanilla JavaScript.** No framework, build step or package install.
+- **Browser storage:** `localStorage` for accounts and entries, `IndexedDB` for uploaded document scans, and Web Crypto (SHA-256) for password hashing.
+- **Bundled libraries** (in `js/vendor/`, loaded only when needed):
+  - [PDF.js](https://mozilla.github.io/pdf.js/) 3.11.174 (Apache-2.0) reads notice PDFs.
+  - [JSZip](https://stuk.github.io/jszip/) 3.10.1 (MIT or GPLv3) builds the documents ZIP.
+- **Fonts:** Plus Jakarta Sans and Caveat, from Google Fonts.
+
+## Getting started
+
+**Prerequisites:** a modern browser, plus either Python 3 or Node.js to run a local server.
+
+```bash
+git clone https://github.com/HarshitaShibe/MedGuide.git
+cd MedGuide
+```
+
+Then start a local server from the project folder.
+
+With Python:
+
+```bash
+python -m http.server 8000
+```
+
+Or with Node.js:
+
+```bash
+npx serve .
+```
+
+Open **http://localhost:8000**, or the address `serve` prints.
+
+Use a local server rather than opening `index.html` directly. PDF reading and document storage need an `http://` address.
+
+**Try it out:**
+1. Create an account and add your NEET details.
+2. Open **Explain a notice** and upload `samples/sample-mcc-notice-round3.pdf`.
+
+### Deploy
+
+The site is fully static, so it can be hosted on GitHub Pages, Netlify or Vercel as is. For GitHub Pages: **Settings → Pages → Deploy from a branch → `main` / root**.
+
+## Project structure
+
+```
+MedGuide/
+├── index.html              Dashboard (home page)
+├── roadmap.html            One small HTML shell per page; content is rendered by js/pages/
+├── deadlines.html          
+├── documents.html
+├── predict.html            College finder
+├── choices.html            Choice list · Compare · Mock practice
+├── counselling.html        Counselling guide (AIQ, State, rules & fees, after allotment)
+├── notice.html             Explain a notice
+├── help.html               Help & experts
+├── institute.html          Institute view
+├── pricing.html            Plans
+├── signin.html  profile.html  account.html  parent.html  privacy.html
+├── css/
+│   └── style.css           All styles; theme colours are CSS variables
+├── js/
+│   ├── data.js             Counselling data: categories, documents, closing ranks, State authorities, Q&A
+│   ├── i18n.js             Hindi translations
+│   ├── core.js             Shared code: storage, accounts, navigation, roadmap, deadlines, rendering
+│   ├── pages/              One script per page or tab
+│   └── vendor/             PDF.js and JSZip
+├── docs/screenshots/       Images used in this README
+└── samples/                Sample MCC notice for testing "Explain a notice"
+```
+
+Every HTML page loads `data.js`, `i18n.js`, `core.js` and its own scripts from `js/pages/`. Each page script registers a render function, and `core.js` draws the page, navigation and footer.
+
+## Configuration
+
+Optional settings are at the top of `js/data.js`:
+
+| Constant | Purpose |
+|---|---|
+| `EXPERT_WHATSAPP` | WhatsApp number that receives expert-session requests, e.g. `"919876543210"`. |
+| `PAYMENT_LINK` | A payment link (e.g. Razorpay) for the Premium plan. |
+| `VERIFIED` | The date official links were last checked; shown in the footer. |
+
+No API keys or server are required.
+
+## Data and privacy
+
+- **Where data lives:** accounts, details, deadlines and uploaded scans stay in the browser on that device. Nothing is sent to a server. Use **My account → Download backup** before switching devices.
+- **Sources:**
+  - Rules and fees are summarised from the MCC UG Counselling 2026 Information Bulletin (revised 20.08.2026).
+  - Closing ranks are compiled from published MCC allotment analyses.
+- **Limits:** MedGuide never registers, fills or locks choices on anyone's behalf, and cannot guarantee admission.
