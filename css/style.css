@@ -4470,3 +4470,16 @@ body[data-page="/institute"] .g2 > .card:nth-child(1) .eyebrow { color: #2f6fdf 
 body[data-page="/institute"] .g2 > .card:nth-child(2) .eyebrow { color: #c23b74 !important; }
 [data-theme="dark"] body[data-page="/institute"] .g2 > .card:nth-child(1) .eyebrow { color: #8db6ff !important; }
 [data-theme="dark"] body[data-page="/institute"] .g2 > .card:nth-child(2) .eyebrow { color: #f59bc0 !important; }
+.fl2 .dev a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.fl2 .dev a:hover { text-decoration: underline; }
+footer .fl2 .dev svg { color: #4d9fe8; }
+[data-theme="dark"] footer .fl2 .dev svg { color: #0a66c2; }
+@media (max-width: 600px) {
+  .fl2 { flex-direction: column; gap: 6px; }
+}

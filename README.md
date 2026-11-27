@@ -171,3 +171,7 @@ No API keys or server are required.
   - Rules and fees are summarised from the MCC UG Counselling 2026 Information Bulletin (revised 20.08.2026).
   - Closing ranks are compiled from published MCC allotment analyses.
 - **Limits:** MedGuide never registers, fills or locks choices on anyone's behalf, and cannot guarantee admission.
+
+## Developer
+
+Designed and developed by **Harshita Shibe**: [LinkedIn](https://www.linkedin.com/in/harshita-shibe-a53488327/)
