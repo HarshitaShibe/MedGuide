@@ -12,6 +12,14 @@ MedGuide is a NEET-UG counselling companion for students and parents, from the d
   <img src="docs/screenshots/home.png" alt="MedGuide home page" width="900">
 </p>
 
+## Demo
+
+<p align="center">
+  <a href="docs/demo/medguide-demo.mp4"><img src="docs/demo/demo-thumbnail.png" alt="Watch the 1-minute MedGuide demo" width="720"></a>
+</p>
+
+A 1-minute walkthrough of every feature, with voiceover: [`docs/demo/medguide-demo.mp4`](docs/demo/medguide-demo.mp4). Or try it live at [medguide-beryl.vercel.app](https://medguide-beryl.vercel.app/).
+
 ## Why MedGuide
 
 Every year over 22 lakh students register for NEET-UG and about 11 lakh qualify, for roughly 1.65 lakh MBBS and BDS seats. A good rank is only half the job. The other half is counselling:
@@ -146,7 +154,9 @@ MedGuide/
 │   ├── core.js             Shared code: storage, accounts, navigation, roadmap, deadlines, rendering
 │   ├── pages/              One script per page or tab
 │   └── vendor/             PDF.js and JSZip
-├── docs/screenshots/       Images used in this README
+├── docs/
+│   ├── screenshots/        Images used in this README
+│   └── demo/               1-minute demo video and its thumbnail
 └── samples/                Sample MCC notice for testing "Explain a notice"
 ```
 
